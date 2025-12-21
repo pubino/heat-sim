@@ -112,8 +112,3 @@ Each interior cell is updated to be the average of its four neighbors, causing h
 **Asymmetric**:
 - Top: 100, Bottom: 0, Left: 0, Right: 50
 - Creates interesting diagonal gradients
-
-## License
-
-Copyright 1997, Princeton University.
-Based on original work by Robert Vanderbei.
