@@ -1,6 +1,6 @@
 # Heat Diffusion Simulator
 
-An interactive Java application for simulating the 2D heat equation on a rectangular plate. Originally developed by Robert Vanderbei at Princeton University (1997).
+An interactive Java application for simulating the 2D heat equation on a rectangular plate. Originally developed by Professor Robert Vanderbei, Princeton University (1997).
 
 ## Overview
 
