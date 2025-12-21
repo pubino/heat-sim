@@ -2,12 +2,11 @@ package heat;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.applet.*;
 
 import myutil.*;
 import myutil.Format;
 
-public class Heat extends Applet implements ActionListener
+public class Heat extends Panel implements ActionListener, SimApp
 {
 
   TextField Top, Bottom, Right, Left, Table, X, Y;
@@ -78,6 +77,10 @@ public class Heat extends Applet implements ActionListener
       outputArea.setFont(new Font("Monospaced", Font.PLAIN, 11));
       add(outputArea);
     }
+
+  public void start() {
+      // No-op for this simulation
+  }
 
   void clearOutput() {
       outputArea.setText("");
