@@ -16,10 +16,12 @@ public class Heat extends Applet implements ActionListener
 
   HeatCanvas hc;
 
+  TextArea outputArea;
+
 
   public static void main(String[] args)
     {
-      new AppletFrame(new Heat(), 350, 700);
+      new AppletFrame(new Heat(), 350, 750);
     }
 
   public void init()
@@ -70,13 +72,27 @@ public class Heat extends Applet implements ActionListener
       hc = new HeatCanvas();
       add(hc);
       hc.setSize(300, 300);
+
+      outputArea = new TextArea("", 3, 40, TextArea.SCROLLBARS_VERTICAL_ONLY);
+      outputArea.setEditable(false);
+      outputArea.setFont(new Font("Monospaced", Font.PLAIN, 11));
+      add(outputArea);
     }
+
+  void clearOutput() {
+      outputArea.setText("");
+  }
+
+  void appendOutput(String text) {
+      outputArea.append(text + "\n");
+  }
 
   public void actionPerformed(ActionEvent event)
     {
       Object source = event.getSource();
 
       if (source == HeatButton) {
+	clearOutput();
 	double top = SL.atof(Top.getText());
 	double bottom = SL.atof(Bottom.getText());
 	double right = SL.atof(Right.getText());
@@ -84,7 +100,7 @@ public class Heat extends Applet implements ActionListener
 	double plate = SL.atof(Table.getText());
 	int xp = SL.atoi(X.getText());
 	int yp = SL.atoi(Y.getText());
-	hc.setData(top, bottom, right, left, plate, xp, yp);
+	hc.setData(top, bottom, right, left, plate, xp, yp, this);
 	hc.start();
       } else
       if (source == Stop) {
@@ -122,6 +138,8 @@ class HeatCanvas extends Canvas implements Runnable
   private Thread myThread = null;
   private volatile boolean running = false;
 
+  Heat parent;
+
   public void start() {
 	  if (myThread == null) {
 		  running = true;
@@ -137,10 +155,11 @@ class HeatCanvas extends Canvas implements Runnable
   }
 
   public void setData(double top, double bottom, double right, double left,
-		   double plate, int xp, int yp)
+		   double plate, int xp, int yp, Heat parent)
     {
       int i, j;
 
+      this.parent = parent;
       this.top = top;
       this.bottom = bottom;
       this.right = right;
@@ -185,9 +204,8 @@ class HeatCanvas extends Canvas implements Runnable
       }
       if (plate > maxtemp) {maxtemp = plate;}
       if (plate < mintemp) {mintemp = plate;}
-      System.out.println("plate = "+plate);
-      System.out.println("maxtemp = "+maxtemp);
-      System.out.println("mintemp = "+mintemp);
+      parent.appendOutput("Initial plate temp: " + plate);
+      parent.appendOutput("Boundary max: " + maxtemp + ", min: " + mintemp);
 
       time = 0;
     }
