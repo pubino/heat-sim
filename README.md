@@ -1,6 +1,6 @@
 # Heat Diffusion Simulator
 
-Part of [Prof. Robert Vanderbei's Java Applications](https://pubino.github.io/vanderbei-apps).
+Part of [Prof. Robert Vanderbei's Java Applications](https://pubino.github.io/vanderbei-apps#heat-sim).
 
 An interactive Java application for simulating the 2D heat equation on a rectangular plate. Originally developed by Professor Robert Vanderbei, Princeton University (1997).
 
