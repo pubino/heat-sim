@@ -1,5 +1,12 @@
 # Heat Diffusion Simulator
 
+[Run in your browser](https://pubino.github.io/heat-sim/).
+
+Select **Start** to run, **Step** to advance once, or **Reset** to use the current inputs from the beginning.
+Python runs locally in a Pyodide Web Worker.
+
+The browser model preserves the Java grid initialization and replaces every interior value by the mean of its four neighbors at each step. Edge temperatures stay fixed. The browser accepts 2 to 256 panels on each axis.
+
 Part of [Prof. Robert Vanderbei's Java Applications](https://pubino.github.io/vanderbei-apps#heat-sim).
 
 An interactive Java application for simulating the 2D heat equation on a rectangular plate. Originally developed by Professor Robert Vanderbei, Princeton University (1997).
@@ -114,3 +121,22 @@ Each interior cell is updated to be the average of its four neighbors, causing h
 **Asymmetric**:
 - Top: 100, Bottom: 0, Left: 0, Right: 50
 - Creates interesting diagonal gradients
+
+## Browser development
+
+Preview the static site locally with Docker, or use Python 3.13 and uv.
+
+```sh
+docker-compose up --build preview
+# Or build and serve directly
+uv sync --locked
+uv run python scripts/build_site.py
+uv run python -m http.server 8000 --bind 127.0.0.1 --directory build/site
+```
+
+Run the same checks as GitHub Actions. The Python tests compare the port against the original Java code in headless mode. Browser tests exercise the built site with Chromium.
+
+```sh
+docker-compose run --build --rm -T js-check
+docker-compose run --build --rm -T test
+```

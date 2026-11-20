@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Watch heat diffuse across a plate. Set the starting temperature and the temperature of each edge to see how the interior changes.">
+  <title>Heat Equation</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow"><a href="https://pubino.github.io/vanderbei-apps/#heat-sim">Vanderbei’s applications</a> · Princeton University</p>
+      <h1>Heat Equation</h1>
+      <p class="intro">Watch heat diffuse across a plate. Set the starting temperature and the temperature of each edge to see how the interior changes.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="simulation-heading">
+      <h2 id="simulation-heading">Simulation</h2>
+      <div class="viewer">
+        <div class="sky">
+          <div class="sky-frame">
+            <canvas id="sky" width="640" height="640" role="img" aria-label="Heatmap of temperatures across the plate, from blue to red"></canvas>
+            <span id="loading" class="loading">Loading Python…</span>
+          </div>
+          <div class="color-scale" aria-label="Temperature scale">
+            <span id="low">—</span>
+            <span class="gradient" aria-hidden="true"></span>
+            <span id="high">—</span>
+          </div>
+          <dl class="facts">
+            <div><dt>Step</dt><dd id="iteration">—</dd></div>
+            <div><dt>Center temperature</dt><dd id="center">—</dd></div>
+          </dl>
+        </div>
+
+        <form id="settings" class="controls">
+          <fieldset id="inputs" disabled>
+            <legend class="sr-only">Initial conditions</legend>
+            <div class="form-grid">
+              <label class="field">Top edge<input type="number" step="any" min="-1000000" max="1000000" value="100" required></label>
+              <label class="field">Bottom edge<input type="number" step="any" min="-1000000" max="1000000" value="80" required></label>
+              <label class="field">Left edge<input type="number" step="any" min="-1000000" max="1000000" value="0" required></label>
+              <label class="field">Right edge<input type="number" step="any" min="-1000000" max="1000000" value="0" required></label>
+              <label class="field full-width">Initial plate temperature<input type="number" step="any" min="-1000000" max="1000000" value="32" required></label>
+              <label class="field">X panels<input type="number" step="1" min="2" max="256" value="80" required></label>
+              <label class="field">Y panels<input type="number" step="1" min="2" max="256" value="80" required></label>
+            </div>
+          </fieldset>
+          <div class="actions">
+            <button id="play" disabled>Start</button>
+            <button id="step" class="secondary" type="button" disabled>Step</button>
+            <button id="reset" class="secondary" type="button" disabled>Reset</button>
+          </div>
+          <p class="hint">Each step averages the four neighbors of every interior cell. Edge temperatures stay fixed.</p>
+          <p id="status" class="hint" role="status">Loading the simulation engine…</p>
+          <p id="error" role="alert" hidden></p>
+          <button id="retry" type="button" class="secondary" hidden>Reload simulator</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <p>Based on Robert Vanderbei’s original Java application. Python runs in your browser via
+        <a href="https://pyodide.org/">Pyodide</a>. <a href="https://github.com/pubino/heat-sim">Source on GitHub</a>.</p>
+    </footer>
+    <noscript><p>Enable JavaScript to run Python in your browser.</p></noscript>
+  </main>
+</body>
+</html>
